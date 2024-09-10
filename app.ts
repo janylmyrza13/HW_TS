@@ -10,29 +10,28 @@ interface  User {
 
 function updateStatus(user:User, newStatus: Status):User {
     return {
-        ... user 
-    
-    }}
+        ... user, 
+        status: newStatus
+    };
+}
 //2
 //Создайте тип HttpMethod с возможными значениями: "GET", "POST", "PUT", "DELETE".
 type HttpMethod = "Cet" | "Post" | "Put" | "Delete";
 //* Создайте тип Request с полями: method: HttpMethod, url: string, body?: any.
-type Request = {
+type  = Request { 
     method: HttpMethod;
     url: string;
     body?: any;
 };
-function makeRequest(request:Request):string{
-    const{ method , url , body}=
-    request;
-
+function makeRequest(request:Request): string {
+    const { method , url , body }= request;
+    return `Запрос: ${method} ${url}` + (body ? ` с телом: ${body}` : '');
 }
 
 //Создайте функцию logValue, которая принимает значение любого типа T и выводит его в консоль.
 // Используйте эту функцию для вывода разных типов данных.
 function logValue<T>(value: T):void{
     console.log(value);
-    
 }
 //Partial и Required:
 // Создайте объект типа User c полями name, age и email.
@@ -48,8 +47,7 @@ const PartialUser: Partial<User> = {
 console.log(PartialUser);
 //Используйте Required<User> для создания нового объекта, который обязательно должен содержать все свойства объекта User.
 
-const requiredUser: Requred<User> =
-{
+const requiredUser: Required<User> ={
  name: "San",
  age: 45,
  email: "San@gamail.com"
@@ -66,9 +64,15 @@ const user: UserNameAndAge = {
 };
 console.log(user);
 //Используйте Omit<User, 'email'> для создания нового объекта, который не содержит свойство email.
+interface UserActivation {
+    name: string;
+    age: number;
+    email: string;
+}
 type UserWithoutEmail = Omit<UserActivation,'email'>;
 const user: UserWithoutEmail = {
-   name: "Anna"
+   name: "Anna",
+   age: 66
 };
 console.log(user);
 //Readonly:
@@ -78,13 +82,15 @@ type ReadonlyUser = Readonly<User>;
 const user: ReadonlyUser = {
     name: " Anna",
     age : 23,
+    mail: "anna@example.com",
+    status: "Statuse"
 };
 user.age = 32;//Ошибка Cannot assign to 'age' because it is a read-only property.
 console.log(user);
 
 //Record
 //Создайте тип UserRecord как Record<string, User>, в котором ключ - это идентификатор пользователя, а значение - объект User. Используйте этот тип для создания коллекции пользователей.
-const UserRecord = Record<string ,User>;
+const user: Record<string, User> = {}
 const users: UserRecord = {
     "1":{
         name: " Kaan",
@@ -96,19 +102,8 @@ const users: UserRecord = {
         age: 25,
         email: "bob@example.com"
     }
-};
+    };
 console.log(users);
 //typeof: Используйте оператор typeof для определения типа переменной и вывода его в консоль.
 let userName: string = "Alice";
 console.log("Тип переменной userName:", typeof userName); // string
-
-
-
-
-
-
-
-
-
-
-
